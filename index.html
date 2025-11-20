@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
 <div class="app">
   <header class="card">
     <h1>⚡ AI Logo Generator</h1>
-    <p class="muted">Mobile-friendly • Vercel Serverless</p>
+    <p class="muted">Mobile-friendly • Vercel</p>
   </header>
 
   <main class="card">
@@ -31,7 +31,7 @@ async function generate() {
 
   const res = await fetch("/api/generate", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt })
   });
 
@@ -44,6 +44,7 @@ async function generate() {
     `;
   } else {
     document.getElementById("output").innerHTML = "Error generating image";
+    console.error(data);
   }
 }
 </script>
