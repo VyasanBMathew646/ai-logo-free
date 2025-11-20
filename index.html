@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Logo Generator</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="app">
+  <header class="card">
+    <h1>⚡ AI Logo Generator</h1>
+    <p class="muted">Mobile-friendly • Vercel Serverless</p>
+  </header>
+
+  <main class="card">
+    <textarea id="prompt" placeholder="Describe your logo..."></textarea>
+    <button onclick="generate()">Generate</button>
+
+    <div id="output"></div>
+  </main>
+</div>
+
+<script>
+async function generate() {
+  const prompt = document.getElementById("prompt").value.trim();
+  if (!prompt) return alert("Enter a prompt");
+
+  document.getElementById("output").innerHTML = "Generating...";
+
+  const res = await fetch("/api/generate", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ prompt })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    document.getElementById("output").innerHTML = `
+      <img src="${data.image}" style="width:100%;border-radius:12px;margin-top:10px;">
+      <p class="muted">${data.prompt}</p>
+    `;
+  } else {
+    document.getElementById("output").innerHTML = "Error generating image";
+  }
+}
+</script>
+
+</body>
+</html>
